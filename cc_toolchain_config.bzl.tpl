@@ -75,6 +75,7 @@ CXX_BUILTIN_INCLUDE_DIRECTORIES = {
         "/usr/local/include",
         "/usr/lib/gcc/x86_64-linux-gnu/%d/include-fixed" % GCC_VERSION,
         "/usr/include/x86_64-linux-gnu",
+	"/usr/lib/gcc/x86_64-redhat-linux/10/include",
         "/usr/include",
     ],
     "armv7a": [
@@ -102,8 +103,11 @@ CXX_BUILTIN_INCLUDE_DIRECTORIES = {
         "/usr/aarch64-linux-gnu/include/c++/%d/backward" % GCC_VERSION,
         "/usr/lib/gcc-cross/aarch64-linux-gnu/%d/include" % GCC_VERSION,
         "/usr/lib/gcc-cross/aarch64-linux-gnu/%d/include-fixed" % GCC_VERSION,
+	"/usr/aarch64-linux-gnu/sys-root/usr/include",
+	"/usr/lib/gcc/aarch64-linux-gnu/10/include",
         "/usr/aarch64-linux-gnu/include",
         "/usr/include/aarch64-linux-gnu",
+	"/usr/lib/gcc/x86_64-redhat-linux/10/include",
         "/usr/include",
     ],
     "riscv64": [
@@ -224,6 +228,7 @@ def _impl(ctx):
                             "-Wunused-but-set-parameter",
                             "-Wno-free-nonheap-object",
                             "-fno-omit-frame-pointer",
+                            "-Wno-error",
                             # "-fmessage-length=0",
                             # "-fno-omit-frame-pointer",
                             # "-fno-strict-aliasing",

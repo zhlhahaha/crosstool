@@ -55,6 +55,22 @@ cc_toolchain(
 
 cc_toolchain_config(name = "aarch64-config", cpu = "aarch64")
 
+config_setting(
+    name = "linux_arm64",
+    constraint_values = [
+        "@platforms//os:linux",
+        "@platforms//cpu:aarch64",
+    ],
+)
+
+config_setting(
+    name = "windows_amd64",
+    constraint_values = [
+        "@platforms//os:windows",
+        "@platforms//cpu:x86_64",
+    ],
+)
+
 cc_toolchain(
     name = "cc-compiler-armv7a",
     toolchain_config = ":armv7a-config",
@@ -252,5 +268,20 @@ toolchain(
         "@platforms//os:windows",
     ],
     toolchain = ":cc-compiler-arm64_windows",
+    toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
+)
+
+toolchain(
+    name = "cc-toolchain-multiarch",
+    exec_compatible_with = [
+        "@platforms//cpu:x86_64",
+        "@platforms//os:linux",
+    ],
+    target_compatible_with = [],
+    toolchain = select({
+        ":linux_arm64": ":cc-compiler-aarch64",
+        ":windows_amd64": ":cc-compiler-x64_windows",
+        "//conditions:default" : ":cc-compiler-k8",
+    }),
     toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
 )
